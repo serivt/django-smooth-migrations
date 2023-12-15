@@ -3,6 +3,7 @@ from typing import Any
 
 from django.db.models import Field, Model
 
+from smooth_migrations.context import MigrationContext
 from smooth_migrations.exceptions import FieldDeprecatedException
 from smooth_migrations.utils import is_executed_by_shell
 
@@ -32,10 +33,12 @@ def deprecated_field(instance: Field) -> Field:
     if not is_executed_by_shell():
         return DeprecatedField()
     instance.null = True
+    MigrationContext.deprecated_fields.append(instance)
     return instance
 
 
 def new_field(instance: Field) -> Field:
     instance.null = True
     instance.is_new_field = True
+    MigrationContext.new_fields.append(instance)
     return instance

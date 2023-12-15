@@ -2,6 +2,7 @@ from typing import Callable
 
 from django.db.models import Manager, Model
 
+from smooth_migrations.context import MigrationContext
 from smooth_migrations.exceptions import ModelDeprecatedException, NotNullableFieldException
 from smooth_migrations.utils import is_executed_by_shell
 
@@ -13,6 +14,7 @@ class DeprecatedModelManager(Manager):
 def deprecated_model(instance: Model) -> Model:
     if not is_executed_by_shell():
         instance.objects = DeprecatedModelManager()
+    MigrationContext.deprecated_models.append(instance)
     return instance
 
 
@@ -28,4 +30,5 @@ def backward_compatible_model(instance: Model) -> Model:
             super_save(instance, *args, **kwargs)
 
         instance.save = save
+    MigrationContext.deprecated_models.append(instance)
     return instance
