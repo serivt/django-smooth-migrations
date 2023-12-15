@@ -40,10 +40,10 @@ column "field3" of relation "demo_mymodel" already exists
 Operations to perform:
   Rolling back to the last migration state: demo 0001_initial
 Running rollback:
-  Unapplying dashboards.0005_remove_field2... OK
-  Unapplying dashboards.0004_alter_field3 copy... OK
-  Unapplying dashboards.0003_alter_field2... OK
-  Unapplying dashboards.0002_alter_mymodel_field1... OK
+  Unapplying demo.0005_remove_field2... OK
+  Unapplying demo.0004_alter_field3 copy... OK
+  Unapplying demo.0003_alter_field2... OK
+  Unapplying demo.0002_alter_mymodel_field1... OK
 Exception detail:
 Traceback (most recent call last):
   File "/opt/pysetup/.venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 89, in _execute
@@ -153,4 +153,17 @@ ModelDeprecatedException: This model is no longer supported because it is deprec
 * Renaming tables
 * Altering columns (which can be backward compatible and potentially ignored)
 * Adding a unique constraint
-  
+
+## Show migration changes
+
+Once a new version is released, it is common to want the changes that were made in the previous version to be applied permanently in the next version. This includes moving application-level validations to database-level. To do this, you can use the show_migration_changes command to list all the changes that were made to models that are backward compatible. Then, you can remove this backward compatibility and generate new migrations to apply the changes permanently.
+
+```
+python manage.py show_migration_changes
+New fields:
+  demo.MyModel.field3
+Deprecated fields:
+  demo.MyModel.field1
+Deprecated models:
+  <class 'demo.models.MyDeprecatedModel'>
+```
