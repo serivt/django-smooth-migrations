@@ -477,3 +477,4 @@ $RECYCLE.BIN/
 .python_history
 docker-compose.yml
 Dockerfile
+poetry.lock
