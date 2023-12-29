@@ -11,7 +11,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self._show("New fields:", MigrationContext.new_fields)
-        self._show("Backward compatbile models:", MigrationContext.backward_compatible_models)
+        self._show(
+            "Backward compatbile models:", MigrationContext.backward_compatible_models
+        )
         self._show("Deprecated fields:", MigrationContext.deprecated_fields)
         self._show("Deprecated models:", MigrationContext.deprecated_models)
 

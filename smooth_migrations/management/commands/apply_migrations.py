@@ -10,7 +10,9 @@ class Command(migrate.Command):
     )
 
     def handle(self, *args, **options):
-        rollback_to: MigrationRecorder.Migration = self.get_last_migration_in_current_state()
+        rollback_to: MigrationRecorder.Migration = (
+            self.get_last_migration_in_current_state()
+        )
         try:
             super().handle(*args, **options)
         except Exception as exc:
@@ -23,7 +25,9 @@ class Command(migrate.Command):
                 self.style.MIGRATE_LABEL,
             )
             self.stdout.write(self.style.MIGRATE_HEADING("Running rollback:"))
-            last_migration: MigrationRecorder.Migration = self.get_last_migration(rollback_to)
+            last_migration: MigrationRecorder.Migration = self.get_last_migration(
+                rollback_to
+            )
             migration: MigrationRecorder.Migration = last_migration
             while self.has_previous(migration) and migration != rollback_to:
                 self.revert_migration(migration)
@@ -60,8 +64,18 @@ class Command(migrate.Command):
             self.style.MIGRATE_LABEL,
             ending=" ",
         )
-        call_command("migrate", previous_migration.app, previous_migration.name, no_input=True, verbosity=0)
+        call_command(
+            "migrate",
+            previous_migration.app,
+            previous_migration.name,
+            no_input=True,
+            verbosity=0,
+        )
         self.stdout.write("OK", self.style.SUCCESS)
 
-    def get_dependency(self, migration: MigrationRecorder.Migration) -> MigrationRecorder.Migration:
-        return MigrationRecorder.Migration.objects.filter(app=migration.app, id__lt=migration.id).latest("id")
+    def get_dependency(
+        self, migration: MigrationRecorder.Migration
+    ) -> MigrationRecorder.Migration:
+        return MigrationRecorder.Migration.objects.filter(
+            app=migration.app, id__lt=migration.id
+        ).latest("id")

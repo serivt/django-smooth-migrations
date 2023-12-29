@@ -8,7 +8,7 @@ def is_executed_by_shell() -> bool:
         "migrate",
         "apply_migrations",
         "showmigrations",
-        "show_migration_changes"
+        "show_migration_changes",
     }
 
 

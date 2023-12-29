@@ -7,6 +7,7 @@ from smooth_migrations.context import MigrationContext
 from smooth_migrations.exceptions import FieldDeprecatedException
 from smooth_migrations.utils import is_executed_by_shell
 
+
 class DeprecatedField(object):
     def __get__(self, obj: Model) -> Any | None:
         msg = "Accessing deprecated field %s.%s" % (
