@@ -9,7 +9,7 @@ from smooth_migrations.utils import is_executed_by_shell
 
 
 class DeprecatedField(object):
-    def __get__(self, obj: Model) -> Any | None:
+    def __get__(self, obj: Model, *args, **kwargs) -> Any | None:
         msg = "Accessing deprecated field %s.%s" % (
             obj.__class__.__name__,
             self._get_field_name(obj),

@@ -3,13 +3,16 @@ from threading import Lock
 
 
 def is_executed_by_shell() -> bool:
-    return set(sys.argv) & {
-        "makemigrations",
-        "migrate",
-        "apply_migrations",
-        "showmigrations",
-        "show_migration_changes",
-    }
+    return bool(
+        set(sys.argv)
+        & {
+            "makemigrations",
+            "migrate",
+            "apply_migrations",
+            "showmigrations",
+            "show_migration_changes",
+        }
+    )
 
 
 class SingletonMeta(type):
