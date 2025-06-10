@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-smooth-migrations"
-version = "0.1.0"
+version = "0.2.0"
 description = "Django library for backward-compatible model changes and automatic migration rollback."
 authors = [
     "Sergio Torrado <sergio.itp16@gmail.com>",
